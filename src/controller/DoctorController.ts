@@ -22,9 +22,9 @@ export class DoctorController {
 
     findOne = async (req: Request, res: Response) => {
         try {
-            const { crm } = req.params;
+            const { id } = req.params;
 
-            const oneDoctor = await this.doctorService.findOne(crm);
+            const oneDoctor = await this.doctorService.findOne(id);
 
             return res.status(200).json(oneDoctor);
         } catch (error) {
@@ -46,10 +46,10 @@ export class DoctorController {
 
     update = async (req: Request, res: Response) => {
         try {
-            const { crm } = req.params;
+            const { id } = req.params;
             const bodyDoctor = req.body;
 
-            await this.doctorService.update(bodyDoctor, crm);
+            await this.doctorService.update(bodyDoctor, id);
 
             return res.status(204).send();
         } catch (error) {
@@ -59,9 +59,9 @@ export class DoctorController {
 
     delete = async (req: Request, res: Response) => {
         try {
-            const { crm } = req.params;
+            const { id } = req.params;
 
-            await this.doctorService.delete(crm);
+            await this.doctorService.delete(id);
 
             return res.status(204).send();
         } catch (error) {
@@ -71,9 +71,9 @@ export class DoctorController {
 
     restore = async (req: Request, res: Response) => {
         try {
-            const { crm } = req.params;
+            const { id } = req.params;
 
-            this.doctorService.restore(crm);
+            this.doctorService.restore(id);
 
             return res.status(204).send();
         } catch (error) {
