@@ -1,16 +1,15 @@
 import { Router } from "express";
-import { PatientController } from "../controller/PatientController";
-import { patientFields, patientId } from "../middleware/PatientMiddleware";
+import { patientId } from "../middleware/PatientMiddleware";
 import { patientSchema } from "../validators/PatientValidator";
+import { patientController } from "../controller";
 
-const patientController = new PatientController();
 const patientRouter = Router();
 
 patientRouter.get("/", patientController.findAll);
 patientRouter.get("/:id", patientId, patientController.findOne);
-patientRouter.post("/", patientSchema, patientFields, patientController.create);
+patientRouter.post("/", patientSchema, patientController.create);
 patientRouter.post("/:id", patientController.restore);
-patientRouter.put("/:id", patientId, patientFields, patientController.update);
+patientRouter.put("/:id", patientId, patientController.update);
 patientRouter.delete("/:id", patientId, patientController.delete);
 
 export default patientRouter;

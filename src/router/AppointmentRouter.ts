@@ -1,16 +1,15 @@
 import { Router } from "express";
-import { AppointmentController } from "../controller/AppointmentController";
 import { appointmentFields, appointmentId } from "../middleware/AppointmentMiddleware";
-import { doctorSchema } from "../validators/DoctorValidator";
+import { appointmentController } from "../controller";
+import { appointmentSchema } from "../validators/AppointmentValidator";
 
-const appointmentController = new AppointmentController();
 const appointmentRouter = Router();
 
 appointmentRouter.get("/", appointmentController.findAll);
 appointmentRouter.get("/:id", appointmentId, appointmentController.findOne);
-appointmentRouter.get("/date/:date/crm/:crm", appointmentController.findAllByDateAndCrm);
-appointmentRouter.get("/susNumber/:susNumber", appointmentController.findAllBySusNumber);
-appointmentRouter.post("/", doctorSchema, appointmentFields, appointmentController.create);
+appointmentRouter.get("/date/:date/id/:id", appointmentController.findAllByDate);
+appointmentRouter.get("/id/:id", appointmentController.findAllByPatientId);
+appointmentRouter.post("/", appointmentSchema, appointmentFields, appointmentController.create);
 appointmentRouter.post("/:id", appointmentController.restore);
 appointmentRouter.put("/:id", appointmentId, appointmentFields, appointmentController.update);
 appointmentRouter.delete("/:id", appointmentId, appointmentController.delete);

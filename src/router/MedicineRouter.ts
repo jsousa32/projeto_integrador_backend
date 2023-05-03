@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { MedicineController } from "../controller/MedicineController";
 import { medicineId } from "../middleware/MedicineMiddleware";
 import { medicineSchema } from "../validators/MedicineValidator";
+import { medicineController } from "../controller";
 
-const medicineController = new MedicineController();
 const medicineRouter = Router();
 
 medicineRouter.get("/", medicineController.findAll);
