@@ -30,7 +30,7 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
         next();
     }
 
-    const checkPatient = await patientService.findOne(username, "loginScope");
+    const checkPatient = await patientService.findSusNumber(username, "loginScope");
 
     if (checkPatient) {
         req.body = checkPatient;

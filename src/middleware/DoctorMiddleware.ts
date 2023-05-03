@@ -12,17 +12,3 @@ export async function doctorId(req: Request, res: Response, next: NextFunction) 
 
     next();
 }
-
-export async function doctorFields(req: Request, res: Response, next: NextFunction) {
-    const { crm, email } = req.body;
-
-    const doctorCrm = await doctorService.findCrm(crm);
-
-    if (!doctorCrm) return res.status(400).json({ message: "Crm já cadastrado" });
-
-    const doctorEmail = await doctorService.findByEmail(email);
-
-    if (!doctorEmail) return res.status(400).json({ message: "Email já cadastrado" });
-
-    next();
-}

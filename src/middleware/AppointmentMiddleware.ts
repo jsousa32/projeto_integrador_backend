@@ -14,7 +14,7 @@ export async function appointmentId(req: Request, res: Response, next: NextFunct
 }
 
 export async function appointmentFields(req: Request, res: Response, next: NextFunction) {
-    const { bodyAppointment } = req.body;
+    const bodyAppointment = req.body;
 
     const date = new Date(bodyAppointment.date).toISOString();
     const nowDay = new Date().toISOString();
@@ -29,7 +29,7 @@ export async function appointmentFields(req: Request, res: Response, next: NextF
 
     if (checkAppointments.length === 3) return res.status(400).send("Limite máximo de consulta alcançado.");
 
-    const checkPatientAppointment = await appointmentService.findByDateAndSus(
+    const checkPatientAppointment = await appointmentService.findByDateAndPatientId(
         bodyAppointment.date,
         bodyAppointment.PatientId
     );
