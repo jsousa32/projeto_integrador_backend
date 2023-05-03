@@ -15,8 +15,8 @@ export class PatientService implements GlobalService<Patient> {
         return onePatient;
     }
 
-    findSusNumber(susNumber: bigint): Promise<Patient | null> {
-        const onePatient = Patient.findOne({ where: { susNumber: susNumber } });
+    findSusNumber(susNumber: string, scope?: string): Promise<Patient | null> {
+        const onePatient = Patient.scope(scope).findOne({ where: { susNumber: susNumber } });
 
         return onePatient;
     }

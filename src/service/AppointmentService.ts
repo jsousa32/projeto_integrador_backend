@@ -22,15 +22,15 @@ export class AppointmentService implements GlobalService<Appointment> {
         return oneAppointment;
     }
 
-    findByDateAndCrm(date: string, crm: string): Promise<Appointment[]> {
-        const allAppointmentsOnDate = Appointment.findAll({ where: { date: date, DoctorCrm: crm } });
+    findByDate(date: string, id: string): Promise<Appointment[]> {
+        const allAppointmentsOnDate = Appointment.findAll({ where: { date: date, DoctorId: id } });
 
         return allAppointmentsOnDate;
     }
 
-    findByDateAndSus(date: string, susNumber: string): Promise<Appointment | null> {
+    findByDateAndPatientId(date: string, id: string): Promise<Appointment | null> {
         const allAppointmentsOnDate = Appointment.findOne({
-            where: { date: date, PatientSusNumber: susNumber },
+            where: { date: date, PatientId: id },
             include: [
                 { model: Patient, attributes: ["name", "susNumber"] },
                 { model: Doctor, attributes: ["name", "crm"] },
@@ -40,9 +40,9 @@ export class AppointmentService implements GlobalService<Appointment> {
         return allAppointmentsOnDate;
     }
 
-    findBySusNumber(susNumber: string): Promise<Appointment[]> {
+    findByPatientId(id: string): Promise<Appointment[]> {
         const allAppointmentsOnDate = Appointment.findAll({
-            where: { PatientSusNumber: susNumber },
+            where: { PatientId: id },
             include: [
                 { model: Patient, attributes: ["name", "susNumber"] },
                 { model: Doctor, attributes: ["name", "crm", "speciality"] },
