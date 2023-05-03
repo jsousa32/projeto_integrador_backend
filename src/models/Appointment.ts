@@ -26,6 +26,22 @@ Appointment.init(
             type: DataTypes.TIME,
             allowNull: false,
         },
+        DoctorId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: Doctor,
+                key: "id",
+            },
+        },
+        PatientId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: Patient,
+                key: "id",
+            },
+        },
     },
     {
         tableName: "appointment",
@@ -36,21 +52,20 @@ Appointment.init(
                 exclude: ["PatientId", "DoctorId"],
             },
         },
+        indexes: [
+            {
+                unique: false,
+                fields: ["PatientId", "DoctorId"],
+            },
+        ],
     }
 );
 
-Doctor.belongsToMany(Patient, {
-    through: Appointment,
+Appointment.belongsTo(Patient, {
+    foreignKey: "PatientId",
 });
-
-Patient.belongsToMany(Doctor, {
-    through: Appointment,
+Appointment.belongsTo(Doctor, {
+    foreignKey: "DoctorId",
 });
-
-Patient.hasMany(Appointment);
-Appointment.belongsTo(Patient);
-
-Doctor.hasMany(Appointment);
-Appointment.belongsTo(Doctor);
 
 Appointment.sync();
