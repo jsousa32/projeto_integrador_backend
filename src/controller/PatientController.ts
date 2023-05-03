@@ -2,11 +2,7 @@ import { Request, Response } from "express";
 import { PatientService } from "../service/PatientService";
 
 export class PatientController {
-    private patientService: PatientService;
-
-    constructor() {
-        this.patientService = new PatientService();
-    }
+    constructor(private patientService: PatientService) {}
 
     findAll = async (req: Request, res: Response) => {
         try {

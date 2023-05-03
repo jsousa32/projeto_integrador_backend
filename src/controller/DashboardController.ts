@@ -2,11 +2,7 @@ import { Request, Response } from "express";
 import { DashboardService } from "../service/DashboardService";
 
 export class DashboardController {
-    private dashboardService: DashboardService;
-
-    constructor() {
-        this.dashboardService = new DashboardService();
-    }
+    constructor(private dashboardService: DashboardService) {}
 
     dashboard = async (request: Request, response: Response) => {
         try {

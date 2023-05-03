@@ -1,15 +1,8 @@
 import { Request, Response } from "express";
 import { AppointmentService } from "../service/AppointmentService";
-import { PatientService } from "../service/PatientService";
 
 export class AppointmentController {
-    private appointmentService: AppointmentService;
-    private patientService: PatientService;
-
-    constructor() {
-        this.appointmentService = new AppointmentService();
-        this.patientService = new PatientService();
-    }
+    constructor(private appointmentService: AppointmentService) {}
 
     findAll = async (req: Request, res: Response) => {
         try {
@@ -37,11 +30,11 @@ export class AppointmentController {
         }
     };
 
-    findAllByDateAndCrm = async (req: Request, res: Response) => {
+    findAllByDate = async (req: Request, res: Response) => {
         try {
-            const { date, crm } = req.params;
+            const { date, id } = req.params;
 
-            const allAppointmentsOnDate = await this.appointmentService.findByDateAndCrm(date, crm);
+            const allAppointmentsOnDate = await this.appointmentService.findByDate(date, id);
 
             return res.status(200).json(allAppointmentsOnDate);
         } catch (error) {
@@ -49,11 +42,11 @@ export class AppointmentController {
         }
     };
 
-    findAllBySusNumber = async (req: Request, res: Response) => {
+    findAllByPatientId = async (req: Request, res: Response) => {
         try {
-            const { susNumber } = req.params;
+            const { id } = req.params;
 
-            const allAppointmentsOnDate = await this.appointmentService.findBySusNumber(susNumber);
+            const allAppointmentsOnDate = await this.appointmentService.findByPatientId(id);
 
             return res.status(200).json(allAppointmentsOnDate);
         } catch (error) {

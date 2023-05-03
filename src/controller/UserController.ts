@@ -2,11 +2,7 @@ import { Request, Response } from "express";
 import { UserService } from "../service/UserService";
 
 export class UserController {
-    private userService: UserService;
-
-    constructor() {
-        this.userService = new UserService();
-    }
+    constructor(private userService: UserService) {}
 
     findAll = async (req: Request, res: Response) => {
         try {
