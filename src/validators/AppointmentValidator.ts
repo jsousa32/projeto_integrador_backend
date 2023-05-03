@@ -1,6 +1,6 @@
 import { checkSchema } from "express-validator";
 
-export const doctorSchema = checkSchema({
+export const appointmentSchema = checkSchema({
     date: {
         in: ["body"],
         isString: true,
