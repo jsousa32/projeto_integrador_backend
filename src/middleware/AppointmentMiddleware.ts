@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AppointmentService } from "../service/AppointmentService";
+import { patientService } from "../service";
+import moment from "moment";
 
 const appointmentService = new AppointmentService();
 
@@ -38,6 +40,22 @@ export async function appointmentFields(req: Request, res: Response, next: NextF
         return res.status(401).json({
             message: "Paciente já possui outra consulta marcada no dia selecionado.",
         });
+
+    next();
+}
+
+export async function checkPatient(req: Request, res: Response, next: NextFunction) {
+    const bodyAppointment = req.body;
+
+    const patient = await patientService.findOne(bodyAppointment.PatientId);
+
+    if (patient?.absentAt !== null) {
+        const date = patient?.absentAt.toISOString();
+
+        const newDate = moment(date).format("DD/MM/YYYY");
+
+        return res.status(400).json({ message: `Você está bloqueado até: ${newDate}` });
+    }
 
     next();
 }
