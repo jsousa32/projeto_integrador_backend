@@ -33,6 +33,8 @@ Appointment.init(
                 model: Doctor,
                 key: "id",
             },
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
         },
         PatientId: {
             type: DataTypes.INTEGER,
@@ -41,6 +43,8 @@ Appointment.init(
                 model: Patient,
                 key: "id",
             },
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
         },
     },
     {
@@ -63,9 +67,16 @@ Appointment.init(
 
 Appointment.belongsTo(Patient, {
     foreignKey: "PatientId",
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
 });
+
 Appointment.belongsTo(Doctor, {
     foreignKey: "DoctorId",
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
 });
 
 Appointment.sync();

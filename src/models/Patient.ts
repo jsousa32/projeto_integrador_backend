@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataTypes, Model } from "sequelize";
 import { IPatient } from "../interface/IPatient";
 import { db } from "../database/dbConnection";
 import bcrypt from "bcrypt";
+import { Appointment } from "./Appointment";
 
 export class Patient extends Model implements IPatient {
     declare id: number;
@@ -11,6 +13,7 @@ export class Patient extends Model implements IPatient {
     declare password: string;
     declare telephone: string;
     declare isAdmin: boolean;
+    declare absentAt: Date;
 }
 
 Patient.init(
@@ -46,6 +49,9 @@ Patient.init(
             allowNull: false,
             defaultValue: false,
         },
+        absentAt: {
+            type: DataTypes.DATE,
+        },
     },
     {
         tableName: "patient",
@@ -61,6 +67,32 @@ Patient.init(
                 attributes: {
                     exclude: ["createdAt", "updatedAt", "deletedAt"],
                 },
+            },
+        },
+        hooks: {
+            async beforeBulkDestroy(options) {
+                const { where } = options;
+
+                if (typeof where === "object" && where !== null && "id" in where) {
+                    const patientId = where.id;
+
+                    await Appointment.destroy({
+                        where: {
+                            PatientId: patientId,
+                        },
+                    });
+                }
+            },
+            async beforeBulkUpdate({ attributes }: any) {
+                const patientId = attributes.id;
+
+                if (attributes.absentAt !== null) {
+                    await Appointment.destroy({
+                        where: {
+                            PatientId: patientId,
+                        },
+                    });
+                }
             },
         },
     }

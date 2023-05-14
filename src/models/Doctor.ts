@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { IDoctor } from "../interface/IDoctor";
 import { db } from "../database/dbConnection";
+import { Appointment } from "./Appointment";
 
 export class Doctor extends Model implements IDoctor {
     declare id: number;
@@ -47,6 +48,21 @@ Doctor.init(
         defaultScope: {
             attributes: {
                 exclude: ["createdAt", "updatedAt", "deletedAt"],
+            },
+        },
+        hooks: {
+            async beforeBulkDestroy(options) {
+                const { where } = options;
+
+                if (typeof where === "object" && where !== null && "id" in where) {
+                    const doctorId = where.id;
+
+                    await Appointment.destroy({
+                        where: {
+                            DoctorId: doctorId,
+                        },
+                    });
+                }
             },
         },
     }
