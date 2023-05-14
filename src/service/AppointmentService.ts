@@ -8,8 +8,8 @@ export class AppointmentService implements GlobalService<Appointment> {
     findAll(): Promise<Appointment[] | null> {
         const allAppointments = Appointment.findAll({
             include: [
-                { model: Patient, attributes: ["name", "susNumber"] },
-                { model: Doctor, attributes: ["name", "crm"] },
+                { model: Patient, attributes: ["id", "name", "susNumber"] },
+                { model: Doctor, attributes: ["id", "name", "crm"] },
             ],
         });
 
@@ -28,12 +28,12 @@ export class AppointmentService implements GlobalService<Appointment> {
         return allAppointmentsOnDate;
     }
 
-    findByDateAndPatientId(date: string, id: string): Promise<Appointment | null> {
+    findByDateAndPatientId(date: string, id: number): Promise<Appointment | null> {
         const allAppointmentsOnDate = Appointment.findOne({
             where: { date: date, PatientId: id },
             include: [
-                { model: Patient, attributes: ["name", "susNumber"] },
-                { model: Doctor, attributes: ["name", "crm"] },
+                { model: Patient, attributes: ["id", "name", "susNumber"] },
+                { model: Doctor, attributes: ["id", "name", "crm"] },
             ],
         });
 
@@ -43,6 +43,18 @@ export class AppointmentService implements GlobalService<Appointment> {
     findByPatientId(id: string): Promise<Appointment[]> {
         const allAppointmentsOnDate = Appointment.findAll({
             where: { PatientId: id },
+            include: [
+                { model: Patient, attributes: ["name", "susNumber"] },
+                { model: Doctor, attributes: ["name", "crm", "speciality"] },
+            ],
+        });
+
+        return allAppointmentsOnDate;
+    }
+
+    findByDoctorId(id: string): Promise<Appointment[]> {
+        const allAppointmentsOnDate = Appointment.findAll({
+            where: { DoctorId: id },
             include: [
                 { model: Patient, attributes: ["name", "susNumber"] },
                 { model: Doctor, attributes: ["name", "crm", "speciality"] },

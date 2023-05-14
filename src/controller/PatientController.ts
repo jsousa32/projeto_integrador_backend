@@ -28,6 +28,18 @@ export class PatientController {
         }
     };
 
+    findSusNumber = async (req: Request, res: Response) => {
+        try {
+            const { susNumber } = req.params;
+
+            const patient = await this.patientService.findSusNumber(susNumber);
+
+            return res.status(200).json(patient);
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    };
+
     create = async (req: Request, res: Response) => {
         try {
             const bodyPatient = req.body;
