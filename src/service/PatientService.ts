@@ -35,6 +35,10 @@ export class PatientService implements GlobalService<Patient> {
         return Patient.update(body, { where: { id: id } });
     }
 
+    updatePassword(newPassword: string, id: string) {
+        return Patient.update({ password: newPassword }, { where: { id: id } });
+    }
+
     delete(id: string) {
         return Patient.destroy({ where: { id: id } });
     }

@@ -29,6 +29,10 @@ export class UserService implements GlobalService<User> {
         return User.update(body, { where: { id: id } });
     }
 
+    updatePassword(newPassword: string, id: string) {
+        return User.update({ password: newPassword }, { where: { id: id } });
+    }
+
     delete(id: string) {
         return User.destroy({ where: { id: id } });
     }
