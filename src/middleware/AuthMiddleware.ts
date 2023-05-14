@@ -27,7 +27,7 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
     if (checkUser) {
         req.body = checkUser;
 
-        next();
+        return next();
     }
 
     const checkPatient = await patientService.findSusNumber(username, "loginScope");
@@ -35,8 +35,30 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
     if (checkPatient) {
         req.body = checkPatient;
 
-        next();
+        return next();
     }
 
     if (!checkUser && !checkPatient) return res.status(400).send("Sem autorização");
+}
+
+export async function verifyForgot(req: Request, res: Response, next: NextFunction) {
+    const { username } = req.body;
+
+    const checkUser = await userService.findByEmail(username);
+
+    if (checkUser) {
+        req.body = checkUser;
+
+        next();
+    }
+
+    const checkPatient = await patientService.findSusNumber(username);
+
+    if (checkPatient) {
+        req.body = checkPatient;
+
+        next();
+    }
+
+    if (!checkUser && !checkPatient) return res.status(400).send("Nenhum registro encontrado");
 }
