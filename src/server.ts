@@ -3,11 +3,15 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import router from "./router";
 import { dbConnection } from "./database/dbConnection";
+import { DailyCron } from "./utils/DailyCron";
+
+const cron = new DailyCron();
 
 dotenv.config();
 const app = express();
 dbConnection();
 const port = process.env.PORT;
+cron.checkAbsentPatient();
 
 app.use(express.json());
 app.use(

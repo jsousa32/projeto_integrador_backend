@@ -13,7 +13,7 @@ export class Patient extends Model implements IPatient {
     declare password: string;
     declare telephone: string;
     declare isAdmin: boolean;
-    declare absentAt: Date;
+    declare absentAt: Date | null;
 }
 
 Patient.init(

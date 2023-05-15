@@ -16,8 +16,15 @@ export async function doctorAppointment(req: Request, res: Response, next: NextF
 
     const checkAppointment = await appointmentService.findByDoctorId(id);
 
-    if (checkAppointment.length !== 0)
-        return res.status(400).json({ message: "O médico não pode ser excluído pois possui consultas" });
+    for (let i = 0; i < checkAppointment.length; i++) {
+        const element = checkAppointment[i];
+        const date = new Date();
+        const dateAppointment = new Date(element.date);
+
+        if (dateAppointment > date) {
+            return res.status(400).json({ message: "O médico não pode ser excluído pois possui consultas" });
+        }
+    }
 
     next();
 }

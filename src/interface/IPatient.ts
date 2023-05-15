@@ -6,5 +6,5 @@ export type IPatient = {
     password: string;
     telephone: string;
     isAdmin: boolean;
-    absentAt: Date;
+    absentAt: Date | null;
 };
