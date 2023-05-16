@@ -10,7 +10,7 @@ import dashboardRouter from "./DashboardRouter";
 const router = Router();
 
 router.use("/status", (req: Request, res: Response) => {
-    res.status(200).send("Está funcionando");
+    res.status(200).json({ message: "Server is running" });
 });
 
 router.use("/auth", authRouter);
