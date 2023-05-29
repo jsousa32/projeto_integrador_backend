@@ -1,11 +1,14 @@
-import { Sequelize } from "sequelize";
+import { Dialect, Sequelize } from "sequelize";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 export const db = new Sequelize({
-    database: "posto_saude1",
-    username: "root",
-    host: "localhost",
-    port: 3306,
-    dialect: "mysql",
+    database: process.env.DB_DATABASE,
+    username: process.env.DB_USERNAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT as unknown as number,
+    dialect: process.env.DB_DIALECT as Dialect,
 });
 
 export const dbConnection = async function () {

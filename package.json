@@ -2,6 +2,9 @@
     "name": "projeto_base",
     "version": "1.0.0",
     "description": "",
+    "engines": {
+        "node": "18"
+    },
     "main": "server.js",
     "scripts": {
         "build": "tsc",
