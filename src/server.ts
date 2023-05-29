@@ -10,7 +10,7 @@ const cron = new DailyCron();
 dotenv.config();
 const app = express();
 dbConnection();
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 cron.checkAbsentPatient();
 
 app.use(express.json());

@@ -4,7 +4,7 @@ import { patientService } from "../service";
 
 export class DailyCron {
     async checkAbsentPatient() {
-        new CronJob("2 * * * * *", async () => {
+        new CronJob("10 * * * * *", async () => {
             console.log("Cron is running");
             const patient = await patientService.findAll();
             const date = new Date();
