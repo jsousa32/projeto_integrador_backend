@@ -1,4 +1,5 @@
 export function mailBody(name: string, token: string) {
+    const url = process.env.URL;
     return `
     <!DOCTYPE html>
     <html lang="en">
@@ -46,7 +47,7 @@ export function mailBody(name: string, token: string) {
 
                     Link de acesso:
                     <a
-                        href="http://localhost:4200/reset/${token}"
+                        href="${url}/reset/${token}"
                         style="font-size: 1.25rem; color: blue"
                         >Redefinir senha</a
                     >
