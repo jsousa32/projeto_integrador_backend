@@ -18,8 +18,9 @@ export async function appointmentId(req: Request, res: Response, next: NextFunct
 export async function appointmentFields(req: Request, res: Response, next: NextFunction) {
     const bodyAppointment = req.body;
 
-    const date = new Date(bodyAppointment.date).toISOString();
-    const nowDay = new Date().toISOString();
+    const date = new Date(bodyAppointment.date).toISOString().substr(0, 10);
+
+    const nowDay = new Date().toISOString().substr(0, 10);
 
     if (date < nowDay) return res.status(400).json({ message: "Não é possível cadastrar consulta com datas passadas" });
 

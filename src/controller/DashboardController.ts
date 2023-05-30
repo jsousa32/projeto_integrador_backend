@@ -11,7 +11,7 @@ export class DashboardController {
 
             const newDate = moment(date).format("YYYY-MM-DD");
 
-            const dashboardInfo = await this.dashboardService.dashboardInfo("2023-06-25");
+            const dashboardInfo = await this.dashboardService.dashboardInfo(newDate);
 
             return response.status(200).json(dashboardInfo);
         } catch (error) {
