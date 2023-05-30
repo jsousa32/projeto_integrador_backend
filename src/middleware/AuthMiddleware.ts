@@ -28,8 +28,6 @@ export async function checkToken(req: Request, res: Response, next: NextFunction
 
     const secret = process.env.SECRET_KEY;
 
-    if (!secret) return res.status(400).json({ message: "Not authorized" });
-
     const check = jwt.verify(token!, secret!, { complete: true });
 
     if (!check) return res.status(400).json({ message: "Not authorized" });
