@@ -15,11 +15,11 @@ router.use("/status", (req: Request, res: Response) => {
 });
 
 router.use("/auth", authRouter);
-router.use("/user", userRouter);
+router.use("/user", checkToken, userRouter);
 router.use("/patient", checkToken, patientRouter);
-router.use("/doctor", doctorRouter);
-router.use("/medicine", medicineRouter);
-router.use("/appointment", appointmentRouter);
-router.use("/dashboard", dashboardRouter);
+router.use("/doctor", checkToken, doctorRouter);
+router.use("/medicine", checkToken, medicineRouter);
+router.use("/appointment", checkToken, appointmentRouter);
+router.use("/dashboard", checkToken, dashboardRouter);
 
 export default router;
