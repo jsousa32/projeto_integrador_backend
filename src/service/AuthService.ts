@@ -29,7 +29,7 @@ export class AuthService {
         await transport
             .sendMail({
                 subject: "Recuperação de Senha",
-                to: "jsousa.quimico@gmail.com",
+                to: email,
                 html: mailBody(name, encoded),
             })
             .catch((err: Error) => {
