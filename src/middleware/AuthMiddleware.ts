@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { NextFunction, Request, Response } from "express";
 import { PatientService } from "../service/PatientService";
 import { UserService } from "../service/UserService";
+import jwt from "jsonwebtoken";
 
 const userService = new UserService();
 const patientService = new PatientService();
@@ -15,6 +17,22 @@ export async function basicAuth(req: Request, res: Response, next: NextFunction)
 
     req.params.username = username;
     req.params.password = password;
+
+    next();
+}
+
+export async function checkToken(req: Request, res: Response, next: NextFunction) {
+    const token = req.header("Authorization")?.replace("Basic ", "");
+
+    if (!token) return res.status(400).json({ message: "Not authorized" });
+
+    const secret = process.env.SECRET_KEY;
+
+    if (!secret) return res.status(400).json({ message: "Not authorized" });
+
+    const check = jwt.verify(token!, secret!, { complete: true });
+
+    if (!check) return res.status(400).json({ message: "Not authorized" });
 
     next();
 }
