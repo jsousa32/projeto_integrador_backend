@@ -1,4 +1,4 @@
-import { Dialect, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -8,8 +8,8 @@ export const db = new Sequelize({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT as unknown as number,
-    dialect: process.env.DB_DIALECT as Dialect,
+    port: 3306,
+    dialect: "mysql",
 });
 
 export const dbConnection = async function () {
